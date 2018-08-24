@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Number Facts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <style>
+        #fact {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card bg-primary text-white mt-5 p-5">
+                    <h1>Number Facts</h1>
+                    <p>Enter a number, get a random fact</p>
+                    <input type="number" class="form-control-lg" id="numberInput" placeholder="Enter any number">
+                    <div id="fact" class="card-body"></div>
+                    <h4 class="card-title">
+                        Facts
+                    </h4>
+                    <button class="btn btn-info" id="myBtn">Submit</button>
+                    <br>
+                    <!-- <form class="form-inline">
+                        <div class="form-group" id="radio">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="trivia" name="customRadioInline1" class="custom-control-input" value="trivia" checked>
+                                <label class="custom-control-label" for="trivia">Trivia</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="math" name="customRadioInline1" class="custom-control-input" value="math">
+                                <label class="custom-control-label" for="math">Math</label>
+                            </div>
+                             <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="year" name="customRadioInline1" class="custom-control-input" value="year">
+                                <label class="custom-control-label" for="year">Year</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="date" name="customRadioInline1" class="custom-control-input" value="date">
+                                <label class="custom-control-label" for="date">Date</label>
+                            </div>  
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="random" name="customRadioInline1" class="custom-control-input" value="random">
+                                <label class="custom-control-label" for="random">Random</label>
+                            </div>
+                        </div>
+                    </form> -->
+
+                    <!-- <div class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="options" id="option1" checked>Math
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option2">Trivia
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option3">Year
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option4">Date
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="options" id="option5">Random
+                        </label>
+                    </div> -->
+
+                    <!-- <select id="selectInput">
+                        <option value="trivia" selected="selected">Trivia</option>
+                        <option value="math">Math</option>
+                        <option value="date">Date</option>
+                        <option value="year">Year</option>
+                        <option value="random">Random</option>
+                    </select> -->
+                    <!-- <div id="factText" class="card-text "></div> -->
+                    <p>Trivia</p>
+                    <div id="triviaText" class="card-text "></div>
+                    <br>
+                    <p>Math</p>
+                    <div id="mathText" class="card-text "></div>
+                    <br>
+                    <p>Year</p>
+                    <div id="yearText" class="card-text "></div>
+                    <!-- add month and year also -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        let fact = document.querySelector('#fact');
+        let factText = document.querySelector('#factText');
+
+        let btnInput = document.querySelector("#myBtn");
+
+        // let numberInput = document.querySelector('#numberInput');
+        // let radioInput = document.querySelector('input[name="customRadioInline1 "]:checked').value
+        // let selectInput = document.querySelector('#selectInput').value;
+        // console.log(selectInput);
+
+        btnInput.addEventListener('click', getFactAjax);
+        // numberInput.addEventListener('input', getFactAjax);
+        // numberInput.addEventListener('input', getFactFetch);
+
+        // radioInput.addEventListener('input', getFactAjax);
+        // radioInput.addEventListener('input', getFactFetch);
+
+        // selectInput.addEventListener('onchange', getFactAjax);
+        // selectInput.addEventListener('input', getFactFetch);
+
+        function getFactAjax() {
+            let number = numberInput.value;
+            // let type = selectInput;
+            if (number != '') {
+                let xhr = new XMLHttpRequest();
+                // xhr.open("GET ", 'http://numbersapi.com/' + number + '/' + type);
+                xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "trivia");
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        fact.style.display = "block ";
+                        triviaText.innerText = this.responseText;
+                    }
+                }
+                xhr.send();
+            }
+            if (number != '') {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "math");
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        fact.style.display = "block ";
+                        mathText.innerText = this.responseText;
+                    }
+                }
+                xhr.send()
+            }
+            if (number != '') {
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "year");
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        fact.style.display = "block ";
+                        yearText.innerText = this.responseText;
+                    }
+                }
+                xhr.send()
+            }
+        }
+
+        // function getFactFetch() {
+        //     let number = numberInput.value;
+        //     let type = selectInput;
+        //     if (number != " ") {
+        //         fetch('http://numbersapi.com/' + number + '/' + type)
+        //             .then(response => response.text())
+        //             .then(data => {
+        //                 fact.style.display = "block ";
+        //                 factText.innerText = data;
+        //             })
+        //             .catch(err => console.log(err));
+        //     }
+        // }
+
+    </script>
+</body>
+
+</html>
