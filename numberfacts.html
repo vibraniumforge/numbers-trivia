@@ -23,11 +23,22 @@
                     <h1>Number Facts</h1>
                     <p>Enter a number, get a random fact</p>
                     <input type="number" class="form-control-lg" id="numberInput" placeholder="Enter any number">
+                    <br>
+                    <button class="btn btn-info" id="myBtn">Submit</button>
+                    <br>
+                    <hr>
+                    <p>Enter a date, get a random fact</p>
+                    <input type="number" class="form-control-lg" id="monthInput" max="12" placeholder="Enter any month">
+                    <input type="number" class="form-control-lg" id="dayInput" max="31" placeholder="Enter any day">
+                    <br>
+                    <button class="btn btn-secondary" id="myBtn2">Submit</button>
                     <div id="fact" class="card-body"></div>
+                    <br>
+                    <hr>
                     <h4 class="card-title">
                         Facts
                     </h4>
-                    <button class="btn btn-info" id="myBtn">Submit</button>
+                    <hr>
                     <br>
                     <!-- <form class="form-inline">
                         <div class="form-group" id="radio">
@@ -80,6 +91,7 @@
                         <option value="random">Random</option>
                     </select> -->
                     <!-- <div id="factText" class="card-text "></div> -->
+
                     <p>Trivia</p>
                     <div id="triviaText" class="card-text "></div>
                     <br>
@@ -88,7 +100,9 @@
                     <br>
                     <p>Year</p>
                     <div id="yearText" class="card-text "></div>
-                    <!-- add month and year also -->
+                    <hr>
+                    <p>Date</p>
+                    <div id="dateText" class="card-text "></div>
                 </div>
             </div>
         </div>
@@ -101,13 +115,15 @@
         let factText = document.querySelector('#factText');
 
         let btnInput = document.querySelector("#myBtn");
+        let btnInput2 = document.querySelector("#myBtn2");
 
         // let numberInput = document.querySelector('#numberInput');
         // let radioInput = document.querySelector('input[name="customRadioInline1 "]:checked').value
         // let selectInput = document.querySelector('#selectInput').value;
-        // console.log(selectInput);
 
         btnInput.addEventListener('click', getFactAjax);
+        btnInput2.addEventListener('click', getDateAjax);
+
         // numberInput.addEventListener('input', getFactAjax);
         // numberInput.addEventListener('input', getFactFetch);
 
@@ -120,7 +136,7 @@
         function getFactAjax() {
             let number = numberInput.value;
             // let type = selectInput;
-            if (number != '') {
+            if (number !== '') {
                 let xhr = new XMLHttpRequest();
                 // xhr.open("GET ", 'http://numbersapi.com/' + number + '/' + type);
                 xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "trivia");
@@ -132,7 +148,7 @@
                 }
                 xhr.send();
             }
-            if (number != '') {
+            if (number !== '') {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "math");
                 xhr.onload = function () {
@@ -143,7 +159,7 @@
                 }
                 xhr.send()
             }
-            if (number != '') {
+            if (number !== '') {
                 let xhr = new XMLHttpRequest();
                 xhr.open("GET", 'http://numbersapi.com/' + number + '/' + "year");
                 xhr.onload = function () {
@@ -153,6 +169,23 @@
                     }
                 }
                 xhr.send()
+            }
+        }
+
+        function getDateAjax() {
+            let month = monthInput.value;
+            let day = dayInput.value;
+            if (day !== '' && month !== "") {
+                let xhr = new XMLHttpRequest();
+                // xhr.open("GET ", 'http://numbersapi.com/' + number + '/' + type);
+                xhr.open("GET", 'http://numbersapi.com/' + month + '/' + day + "/date");
+                xhr.onload = function () {
+                    if (this.status === 200) {
+                        fact.style.display = "block ";
+                        dateText.innerText = this.responseText;
+                    }
+                }
+                xhr.send();
             }
         }
 
